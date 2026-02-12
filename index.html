@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packed — Your Room, Fully Booked</title>
+    <meta name="description" content="We list your venue on the UK's biggest booking platforms and fill your empty nights. Zero upfront cost. You only pay when you get a booking.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --orange: #FF6B35;
+            --orange-light: #FF8A5C;
+            --orange-glow: rgba(255, 107, 53, 0.12);
+            --charcoal: #1A1A2E;
+            --charcoal-light: #2D2D44;
+            --warm-white: #FAFAF7;
+            --sand: #F5E6D3;
+            --sand-dark: #E8D5BE;
+            --sage: #7CB69D;
+            --sage-light: #A8D5BC;
+            --text: #1A1A2E;
+            --text-muted: #6B6B80;
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--warm-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(250, 250, 247, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 14px 40px;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 26px;
+            letter-spacing: -0.5px;
+            color: var(--charcoal);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--orange); }
+
+        .nav-links { display: flex; gap: 36px; align-items: center; }
+
+        .nav-links a {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-cta {
+            background: var(--charcoal) !important;
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: transform 0.2s, background 0.2s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--orange) !important;
+            transform: translateY(-1px);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, var(--orange-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(124, 182, 157, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(44px, 5.5vw, 72px);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            color: var(--charcoal);
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--orange);
+            position: relative;
+        }
+
+        .hero h1 em::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--orange);
+            opacity: 0.2;
+            border-radius: 3px;
+        }
+
+        .hero-sub {
+            font-size: 20px;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-top: 28px;
+            max-width: 520px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--orange);
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--charcoal);
+            border: 2px solid var(--sand-dark);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--charcoal);
+            transform: translateY(-2px);
+        }
+
+        /* Hero right — stats card */
+        .hero-card {
+            background: white;
+            border-radius: 24px;
+            padding: 44px;
+            box-shadow: 0 20px 60px rgba(26, 26, 46, 0.06), 0 1px 3px rgba(26, 26, 46, 0.04);
+            position: relative;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 40px;
+            right: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--orange), var(--sage));
+            border-radius: 0 0 3px 3px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'DM Mono', monospace;
+            font-size: 40px;
+            font-weight: 500;
+            color: var(--charcoal);
+            line-height: 1;
+        }
+
+        .stat-number .accent { color: var(--orange); }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        .stat-divider {
+            grid-column: 1 / -1;
+            height: 1px;
+            background: var(--sand);
+        }
+
+        .hero-card-footer {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--sand);
+            text-align: center;
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .hero-card-footer strong {
+            color: var(--orange);
+            font-weight: 600;
+        }
+
+        /* ===== HOW IT WORKS ===== */
+        .section {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            color: var(--charcoal);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-top: 64px;
+        }
+
+        .step {
+            background: white;
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(26, 26, 46, 0.08);
+        }
+
+        .step-num {
+            font-family: 'DM Mono', monospace;
+            font-size: 48px;
+            font-weight: 500;
+            color: var(--sand);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--charcoal);
+        }
+
+        .step p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ===== WHAT YOU GET (dark section) ===== */
+        .dark-section {
+            background: var(--charcoal);
+            color: white;
+            padding: 100px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(ellipse at top right, rgba(255, 107, 53, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .dark-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dark-section .section-title { color: white; }
+        .dark-section .section-subtitle { color: rgba(255,255,255,0.6); }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 64px;
+        }
+
+        .benefit {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            transition: background 0.3s;
+        }
+
+        .benefit:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .benefit-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--orange);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .benefit h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .benefit p {
+            font-size: 15px;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.6;
+        }
+
+        /* ===== PRICING ===== */
+        .pricing-section {
+            background: var(--sand);
+            padding: 100px 40px;
+        }
+
+        .pricing-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 24px;
+            padding: 60px;
+            max-width: 680px;
+            margin: 48px auto 0;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(26, 26, 46, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--orange), var(--sage));
+        }
+
+        .price-amount {
+            font-family: 'DM Mono', monospace;
+            font-size: 72px;
+            font-weight: 500;
+            color: var(--charcoal);
+            line-height: 1;
+        }
+
+        .price-amount span { font-size: 28px; color: var(--text-muted); }
+
+        .price-context {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .price-details {
+            list-style: none;
+            margin-top: 36px;
+            text-align: left;
+            display: grid;
+            gap: 16px;
+        }
+
+        .price-details li {
+            font-size: 16px;
+            padding-left: 32px;
+            position: relative;
+            color: var(--text);
+        }
+
+        .price-details li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--sage);
+            font-weight: 700;
+        }
+
+        .price-highlight {
+            margin-top: 36px;
+            padding: 20px 28px;
+            background: var(--orange-glow);
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--orange);
+        }
+
+        /* ===== PLATFORMS ===== */
+        .platforms {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 64px;
+            flex-wrap: wrap;
+        }
+
+        .platform-badge {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 20px 32px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .platform-name {
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--charcoal);
+        }
+
+        .platform-stat {
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ===== FAQ ===== */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: var(--radius);
+            padding: 32px;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .faq-item h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--charcoal);
+        }
+
+        .faq-item p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            padding: 120px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--orange-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .cta-title {
+            font-size: clamp(36px, 4.5vw, 56px);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            color: var(--charcoal);
+            position: relative;
+        }
+
+        .cta-sub {
+            font-size: 19px;
+            color: var(--text-muted);
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .cta-section .btn { margin-top: 36px; position: relative; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--charcoal);
+            color: rgba(255,255,255,0.5);
+            padding: 48px 40px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: white;
+        }
+
+        .footer-logo span { color: var(--orange); }
+
+        .footer-links { display: flex; gap: 28px; }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: white; }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== MOBILE ===== */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--charcoal);
+            margin: 6px 0;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 900px) {
+            nav { padding: 16px 24px; }
+
+            .mobile-menu-btn { display: block; }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 24px;
+                gap: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.open { display: flex; }
+
+            .hero { padding: 100px 24px 60px; }
+            .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+            .hero h1 { font-size: 40px; letter-spacing: -1px; }
+
+            .section { padding: 64px 24px; }
+            .steps { grid-template-columns: 1fr 1fr; }
+            .benefits-grid { grid-template-columns: 1fr; }
+            .faq-grid { grid-template-columns: 1fr; }
+
+            .dark-section { padding: 64px 24px; }
+            .pricing-section { padding: 64px 24px; }
+            .pricing-card { padding: 40px 28px; }
+
+            .cta-section { padding: 80px 24px; }
+            .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+        }
+
+        @media (max-width: 600px) {
+            .steps { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 34px; }
+            .price-amount { font-size: 56px; }
+            .platforms { gap: 16px; }
+            .platform-badge { padding: 14px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="nav">
+        <a href="#" class="logo">PACKED<span>.</span></a>
+        <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links">
+            <a href="#how">How It Works</a>
+            <a href="#benefits">What You Get</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="fade-up">
+                <h1>Your room.<br><em>Fully booked.</em></h1>
+                <p class="hero-sub">We list your venue on the UK's biggest booking platforms and fill your empty nights. No upfront costs. No monthly fees. You only pay when you get a booking.</p>
+                <div class="hero-ctas">
+                    <a href="#contact" class="btn btn-primary">Get Started — It's Free</a>
+                    <a href="#how" class="btn btn-secondary">See How It Works</a>
+                </div>
+            </div>
+            <div class="hero-card fade-up" style="transition-delay: 0.15s">
+                <div class="stats-grid">
+                    <div class="stat">
+                        <div class="stat-number">2<span class="accent">M+</span></div>
+                        <div class="stat-label">People searching for event spaces every year</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">10<span class="accent">K+</span></div>
+                        <div class="stat-label">London venues still missing from these platforms</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <div class="stat-number">£<span class="accent">800</span></div>
+                        <div class="stat-label">Average booking value for a pub function room</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">3<span class="accent">-5</span></div>
+                        <div class="stat-label">Extra bookings per month our venues typically see</div>
+                    </div>
+                </div>
+                <div class="hero-card-footer">
+                    That's <strong>£2,000–£5,000</strong> in additional monthly revenue
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how">
+        <div class="fade-up">
+            <div class="section-label">How It Works</div>
+            <div class="section-title">Four steps. Zero hassle.</div>
+            <div class="section-subtitle">We do the work. You get the bookings. Your existing customers and direct enquiries are completely unaffected.</div>
+        </div>
+        <div class="steps">
+            <div class="step fade-up" style="transition-delay: 0.05s">
+                <div class="step-num">01</div>
+                <h3>We photograph your space</h3>
+                <p>We visit, take professional photos, and gather everything we need to create a brilliant listing. Takes about 30 minutes of your time.</p>
+            </div>
+            <div class="step fade-up" style="transition-delay: 0.1s">
+                <div class="step-num">02</div>
+                <h3>We list you online</h3>
+                <p>We create optimised listings on Hire Space, Tagvenue, and other platforms where millions of people search for event spaces.</p>
+            </div>
+            <div class="step fade-up" style="transition-delay: 0.15s">
+                <div class="step-num">03</div>
+                <h3>We handle enquiries</h3>
+                <p>When someone wants to book, we respond, qualify them, check your availability, and coordinate the booking. You just say yes or no.</p>
+            </div>
+            <div class="step fade-up" style="transition-delay: 0.2s">
+                <div class="step-num">04</div>
+                <h3>You host the event</h3>
+                <p>You do what you do best — serve great drinks and run a great night. We only get paid when a booking is confirmed.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLATFORMS -->
+    <section class="section" style="padding-top: 0">
+        <div class="fade-up" style="text-align: center">
+            <div class="section-label">Where We List You</div>
+            <div class="section-title">The platforms your customers<br>are already searching</div>
+        </div>
+        <div class="platforms fade-up">
+            <div class="platform-badge">
+                <div class="platform-name">Hire Space</div>
+                <div class="platform-stat">1.5M+ visitors / year</div>
+            </div>
+            <div class="platform-badge">
+                <div class="platform-name">Tagvenue</div>
+                <div class="platform-stat">700K+ visitors / month</div>
+            </div>
+            <div class="platform-badge">
+                <div class="platform-name">Peerspace</div>
+                <div class="platform-stat">Creative & production</div>
+            </div>
+            <div class="platform-badge">
+                <div class="platform-name">HeadBox</div>
+                <div class="platform-stat">Corporate events</div>
+            </div>
+            <div class="platform-badge">
+                <div class="platform-name">DesignMyNight</div>
+                <div class="platform-stat">8M+ users / year</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT YOU GET -->
+    <section class="dark-section" id="benefits">
+        <div class="dark-inner">
+            <div class="fade-up">
+                <div class="section-label">What You Get</div>
+                <div class="section-title">Everything handled.<br>Nothing to worry about.</div>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit fade-up" style="transition-delay: 0.05s">
+                    <div class="benefit-icon">📸</div>
+                    <h3>Professional Photography</h3>
+                    <p>We photograph your space and create listings that make people want to book. First impressions matter — we make yours count.</p>
+                </div>
+                <div class="benefit fade-up" style="transition-delay: 0.1s">
+                    <div class="benefit-icon">✍️</div>
+                    <h3>Optimised Listings</h3>
+                    <p>We write descriptions that rank in search results and convert browsers into bookers. Across every platform that matters.</p>
+                </div>
+                <div class="benefit fade-up" style="transition-delay: 0.15s">
+                    <div class="benefit-icon">💬</div>
+                    <h3>Enquiry Management</h3>
+                    <p>Every enquiry responded to within 4 hours. We qualify leads, check your availability, and coordinate the booking end to end.</p>
+                </div>
+                <div class="benefit fade-up" style="transition-delay: 0.2s">
+                    <div class="benefit-icon">📊</div>
+                    <h3>Pricing Strategy</h3>
+                    <p>We set and adjust pricing by day of week, season, and event type to maximise your revenue without leaving money on the table.</p>
+                </div>
+                <div class="benefit fade-up" style="transition-delay: 0.25s">
+                    <div class="benefit-icon">📅</div>
+                    <h3>Availability Management</h3>
+                    <p>We keep your calendar up to date across every platform. No double bookings. No missed opportunities.</p>
+                </div>
+                <div class="benefit fade-up" style="transition-delay: 0.3s">
+                    <div class="benefit-icon">📈</div>
+                    <h3>Monthly Reporting</h3>
+                    <p>Clear, honest numbers every month. Enquiries, bookings, revenue — you always know exactly where you stand.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing-section" id="pricing">
+        <div class="pricing-inner" style="text-align: center;">
+            <div class="fade-up">
+                <div class="section-label">Pricing</div>
+                <div class="section-title">Only pay when it works.</div>
+                <div class="section-subtitle" style="margin: 12px auto 0;">No setup fees. No monthly fees. No risk.</div>
+            </div>
+            <div class="pricing-card fade-up">
+                <div class="price-amount">£0 <span>upfront</span></div>
+                <div class="price-context">We take 12.5% of confirmed bookings only</div>
+                <ul class="price-details">
+                    <li>Professional photography of your space — included</li>
+                    <li>Listings created across all major platforms — included</li>
+                    <li>All enquiry handling and booking coordination — included</li>
+                    <li>Pricing strategy and seasonal optimisation — included</li>
+                    <li>Monthly performance reporting — included</li>
+                    <li>Your existing bookings and direct customers — unaffected</li>
+                    <li>Cancel anytime with 30 days' notice</li>
+                </ul>
+                <div class="price-highlight">
+                    If we don't generate bookings, you pay nothing. Ever.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+        <div class="fade-up">
+            <div class="section-label">FAQ</div>
+            <div class="section-title">Good questions.</div>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item fade-up">
+                <h3>Do I have to pay anything upfront?</h3>
+                <p>No. We photograph your space, create your listings, and manage everything at our own cost. You only pay our 12.5% fee when a confirmed booking takes place.</p>
+            </div>
+            <div class="faq-item fade-up">
+                <h3>What about my existing customers?</h3>
+                <p>Completely unaffected. Our fee only applies to new bookings that come through the platforms we manage. Walk-ins, regulars, and direct enquiries are 100% yours.</p>
+            </div>
+            <div class="faq-item fade-up">
+                <h3>Can I say no to a booking?</h3>
+                <p>Absolutely. You approve every booking before it's confirmed. We never commit your space without your say-so.</p>
+            </div>
+            <div class="faq-item fade-up">
+                <h3>How much time does it take from me?</h3>
+                <p>About 30 minutes for the initial photography visit. After that, just responding when we check your availability — usually a quick text or email.</p>
+            </div>
+            <div class="faq-item fade-up">
+                <h3>What if it doesn't work?</h3>
+                <p>Then you've lost nothing. No setup costs, no monthly fees. You can cancel anytime with 30 days' notice. We take on all the risk.</p>
+            </div>
+            <div class="faq-item fade-up">
+                <h3>Which venues do you work with?</h3>
+                <p>Pubs with function rooms, restaurants with private dining rooms, community halls, and unique event spaces across London. If you've got a room people can hire, we'd love to chat.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contact">
+        <div class="cta-title fade-up">Ready to fill your<br>empty nights?</div>
+        <div class="cta-sub fade-up">Get in touch. We'll pop by for a chat and take it from there.</div>
+        <a href="mailto:hello@getpacked.co.uk" class="btn btn-primary fade-up" style="transition-delay: 0.1s">
+            hello@getpacked.co.uk
+        </a>
+        <div style="margin-top: 16px; font-size: 15px; color: var(--text-muted); position: relative;" class="fade-up">
+            or call us: <a href="tel:+447XXXXXXXXX" style="color: var(--charcoal); font-weight: 600; text-decoration: none;">07XXX XXX XXX</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-logo">PACKED<span>.</span></div>
+            <div class="footer-links">
+                <a href="#how">How It Works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+                <a href="mailto:hello@getpacked.co.uk">Contact</a>
+            </div>
+            <div style="font-size: 13px;">© 2026 Packed. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll-based nav
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 40);
+        });
+
+        // Intersection Observer for fade-up animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.querySelector('.nav-links')?.classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
